@@ -32,7 +32,7 @@ def send_application(user_id):
         text += f"{TEXTS[lang][question]}\n"
         text += f"{value}\n\n"
 
-    # Admin uchun tekshirish tugmasi
+   
     keyboard = types.InlineKeyboardMarkup()
 
     checked = types.InlineKeyboardButton(
@@ -42,14 +42,14 @@ def send_application(user_id):
 
     keyboard.add(checked)
 
-    # Avval matnli ma'lumotlarni yuboramiz
+    
     bot.send_message(
         ADMIN_ID,
         text,
         reply_markup=keyboard
     )
 
-    # Selfi mavjud bo'lsa, alohida yuboramiz
+   
     photo = answers.get("photo")
 
     if photo:
@@ -129,7 +129,6 @@ def application_checked(call):
         "Ariza tekshirildi!"
     )
 
-# /start
 @bot.message_handler(commands=['start'])
 def start(message):
 
@@ -152,8 +151,6 @@ def start(message):
         reply_markup=keyboard
     )
 
-
-# Til tanlash
 @bot.callback_query_handler(func=lambda call: call.data.startswith("lang_"))
 def select_language(call):
 
@@ -177,8 +174,6 @@ def select_language(call):
 
     ask_question(user_id)
 
-
-# Savol berish
 def ask_question(user_id):
 
     user = users[user_id]
@@ -224,7 +219,6 @@ def ask_question(user_id):
         )
 
 
-# Javoblarni qabul qilish
 @bot.message_handler(content_types=['text', 'photo', 'contact'])
 def get_answer(message):
 
@@ -275,8 +269,6 @@ def get_answer(message):
 
         ask_question(user_id)
 
-
-# Yakuniy tekshiruv
 def show_confirmation(user_id):
 
     user = users[user_id]
@@ -302,5 +294,4 @@ def show_confirmation(user_id):
     )
 
 
-print("Bot ishga tushdi!")
 bot.infinity_polling()
